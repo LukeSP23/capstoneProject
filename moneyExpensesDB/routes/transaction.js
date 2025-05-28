@@ -3,14 +3,13 @@ const router = require("express").Router();
 
 router.post("/add", async (req, res) => {
   Transaction.create({
-    amount: req.body.amount,
-    category: req.body.category,
-    date: req.body.date,
+    Amount: req.body.Amount,
+    Category: req.body.Category,
+    Date: req.body.Date,
+    Type: req.body.Type,
   })
     .then((transaction) => {
-      res.status(201).json({
-        transaction: transaction,
-      });
+      res.status(201).json(transaction);
     })
     .catch((err) => {
       res.status(500).json({
@@ -31,6 +30,32 @@ router.get("/all", async (req, res) => {
         error: err.message,
       });
     });
+});
+
+router.put("/update/:trans_id", async (req, res) => {
+  const id = req.params.trans_id;
+  Transaction.update({
+    trans_id: id,
+    Amount: req.body.Amount,
+    Category: req.body.Category,
+    Date: req.body.Date,
+    Type: req.body.Type,
+  },
+{
+    where: { trans_id: id }
+
+}
+).then((result) => {
+    if (result[0] === 1) {
+      res.status(200).json({
+        message: "Transaction updated successfully",
+      });
+    } else {
+      res.status(404).json({
+        message: "Transaction not found",
+      });
+    }
+  });
 });
 
 module.exports = router;

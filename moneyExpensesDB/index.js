@@ -6,6 +6,7 @@ const sequelize = require("./config");
 const app = express();
 
 app.use(cors({ origin: "http://localhost:8100" }));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const Transaction = require("./models/transaction");

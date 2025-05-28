@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Balance and Transactions
-    </ion-title>
+    <ion-title> Balance and Transactions </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,19 +19,38 @@
     <ion-card-content>
       This section displays your current balance and recent transactions.
       <br />
-      You can view, add, or edit transactions to keep track of your financial activities.
+      You can view, add, or edit transactions to keep track of your financial
+      activities.
     </ion-card-content>
   </ion-card>
 
-   <ion-list>
-    
+  <ion-list>
     <ion-item *ngFor="let transaction of transactions">
       <ion-label>
         <h2>{{ transaction.Category }}</h2>
-        <p>Amount: {{ transaction.Amount | currency }}</p>
+        <p
+          [ngClass]="{
+    'amount-positive': transaction.Type == 'Income',
+    'amount-negative': transaction.Type == 'Expense'
+  }"
+        >
+          Amount: {{ transaction.Amount | currency }}
+        </p>
         <p>Date: {{ transaction.Date | date:'short'}}</p>
       </ion-label>
+      <ion-button
+        fill="clear"
+        color="primary"
+        slot="end"
+        (click)="editTransaction(transaction)"
+      >
+        <ion-icon name="create-outline"></ion-icon>
+        Edit
+      </ion-button>
+      <!-- <ion-button fill="clear" color="danger" slot="end" (click)="deleteTransaction(transaction)">
+      <ion-icon name="trash-outline"></ion-icon>
+      Delete
+    </ion-button> -->
     </ion-item>
   </ion-list>
-
 </ion-content>

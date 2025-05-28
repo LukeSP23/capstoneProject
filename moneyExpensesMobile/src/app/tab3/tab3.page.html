@@ -30,16 +30,24 @@
       <ion-card-title>Into Pocket (Money In)</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form>
+      <form [formGroup]="incomeForm" (ngSubmit)="onSubmit('Income')">
         <ion-item>
           <ion-label position="floating">Amount</ion-label>
-          <br>
-          <ion-input type="number" required></ion-input>
+          <br />
+          <ion-input
+            type="number"
+            formControlName="Amount"
+            required
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Source</ion-label>
-          <br>
-          <ion-select placeholder="Select Source" required>
+          <br />
+          <ion-select
+            formControlName="Category"
+            placeholder="Select Source"
+            required
+          >
             <ion-select-option value="salary">Salary</ion-select-option>
             <ion-select-option value="freelance">Freelance</ion-select-option>
             <ion-select-option value="gift">Gift</ion-select-option>
@@ -49,9 +57,14 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Date</ion-label>
-          <br>
-          <ion-input type="date" required></ion-input>
+          <br />
+          <ion-datetime
+            type="date"
+            formControlName="Date"
+            required
+          ></ion-datetime>
         </ion-item>
+        {{incomeForm.value | json}}
         <ion-button expand="block" type="submit" color="success"
           >Add Income</ion-button
         >
@@ -64,28 +77,43 @@
       <ion-card-title>Out of Pocket (Money Out)</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form>
+      <form [formGroup]="expenseForm" (ngSubmit)="onSubmit('Expense')">
         <ion-item>
           <ion-label position="floating">Amount</ion-label>
-          <br>
-          <ion-input type="number" required></ion-input>
+          <br />
+          <ion-input
+            type="number"
+            formControlName="Amount"
+            required
+          ></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Expense</ion-label>
-          <br>
-          <ion-select placeholder="Select Source" required>
-            <ion-select-option value="salary">Housing</ion-select-option>
-            <ion-select-option value="freelance">Food</ion-select-option>
-            <ion-select-option value="gift">Transport</ion-select-option>
-            <ion-select-option value="investment">Entertainment</ion-select-option>
+          <br />
+          <ion-select
+            formControlName="Category"
+            placeholder="Select Source"
+            required
+          >
+            <ion-select-option value="housing">Housing</ion-select-option>
+            <ion-select-option value="food">Food</ion-select-option>
+            <ion-select-option value="transport">Transport</ion-select-option>
+            <ion-select-option value="entertainment"
+              >Entertainment</ion-select-option
+            >
             <ion-select-option value="other">Other</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Date</ion-label>
-          <br>
-          <ion-input type="date" required></ion-input>
+          <br />
+          <ion-datetime
+            type="date"
+            formControlName="Date"
+            required
+          ></ion-datetime>
         </ion-item>
+        {{expenseForm.value | json}}
         <ion-button expand="block" type="submit" color="danger"
           >Add Expense</ion-button
         >
