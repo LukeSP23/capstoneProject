@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 
-// get sequelize connection from config file
 const sequelize = require("./config");
 
 const app = express();

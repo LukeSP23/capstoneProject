@@ -6,5 +6,4 @@ const sequelize = new Sequelize("moneyexpensesdb", "root", "Brayden15", {
   logging: console.log,
 });
 
-// Export the sequelize object
 module.exports = sequelize;

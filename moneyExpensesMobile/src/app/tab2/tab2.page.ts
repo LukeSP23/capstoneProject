@@ -19,16 +19,13 @@ constructor(
   transactions: Transaction[] = [];
 
   ngOnInit() {
-    // get students from the server
     this.loadTransactions();
   }
 
   ionViewDidEnter() {
-    // refresh the list of students
     this.loadTransactions();
   }
 
-  // get students from the server
    loadTransactions() {
     this.transactionService.getTransactions().subscribe({
       next: (response) => { this.transactions = response, console.log('Transactions loaded', this.transactions); },
