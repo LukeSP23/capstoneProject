@@ -10,14 +10,14 @@ const Transaction = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    amount: {
+    Amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    category: {
+    Category: {
       type: DataTypes.STRING,
     },
-    date: {
+    Date: {
       type: DataTypes.DATE,
       allowNull: false,
     },

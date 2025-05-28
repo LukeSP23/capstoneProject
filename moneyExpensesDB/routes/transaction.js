@@ -9,13 +9,25 @@ router.post("/add", async (req, res) => {
   })
     .then((transaction) => {
       res.status(201).json({
-        message: "Transaction added successfully",
         transaction: transaction,
       });
     })
     .catch((err) => {
       res.status(500).json({
         message: "Error adding transaction",
+        error: err.message,
+      });
+    });
+});
+
+router.get("/all", async (req, res) => {
+  Transaction.findAll()
+    .then((transactions) => {
+      res.status(200).json(transactions);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: "Error retrieving transactions",
         error: err.message,
       });
     });

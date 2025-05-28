@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
+import { TransactionService } from '../transaction.service';
+import { Transaction } from '../transaction';
 
 @Component({
   selector: 'app-tab2',
@@ -8,6 +11,29 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+constructor(
+    private navCtrl: NavController,
+    private transactionService: TransactionService
+  ) {}
 
-}
+  transactions: Transaction[] = [];
+
+  ngOnInit() {
+    // get students from the server
+    this.loadTransactions();
+  }
+
+  ionViewDidEnter() {
+    // refresh the list of students
+    this.loadTransactions();
+  }
+
+  // get students from the server
+   loadTransactions() {
+    this.transactionService.getTransactions().subscribe({
+      next: (response) => { this.transactions = response, console.log('Transactions loaded', this.transactions); },
+      error: (err) => { console.error('Failed to load transactions', err); }
+    });
+  }
+  }
+

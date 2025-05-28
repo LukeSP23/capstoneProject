@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Balance and Transactions
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,5 +13,27 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-card color="primary">
+    <ion-card-header>
+      <ion-card-title>Balance Overview</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      This section displays your current balance and recent transactions.
+      <br />
+      You can view, add, or edit transactions to keep track of your financial activities.
+    </ion-card-content>
+  </ion-card>
+
+   <ion-list>
+    
+    <ion-item *ngFor="let transaction of transactions">
+      <ion-label>
+        <h2>{{ transaction.Category }}</h2>
+        <p>Amount: {{ transaction.Amount | currency }}</p>
+        <p>Date: {{ transaction.Date | date:'short'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
