@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+    <ion-title> Into Pocket - Out of Pocket </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,5 +11,85 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-card color="secondary">
+    <ion-card-header>
+      <ion-card-title>Into Pocket - Out of Pocket Overview</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      This section is for you the user to fill out your income and expenses.
+      This input will be used to track your financial activities.
+      <br />
+      You can add, or edit transactions to keep up to date of your financial
+      activities.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Into Pocket (Money In)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form>
+        <ion-item>
+          <ion-label position="floating">Amount</ion-label>
+          <br>
+          <ion-input type="number" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Source</ion-label>
+          <br>
+          <ion-select placeholder="Select Source" required>
+            <ion-select-option value="salary">Salary</ion-select-option>
+            <ion-select-option value="freelance">Freelance</ion-select-option>
+            <ion-select-option value="gift">Gift</ion-select-option>
+            <ion-select-option value="investment">Investment</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Date</ion-label>
+          <br>
+          <ion-input type="date" required></ion-input>
+        </ion-item>
+        <ion-button expand="block" type="submit" color="success"
+          >Add Income</ion-button
+        >
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Out of Pocket (Money Out)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form>
+        <ion-item>
+          <ion-label position="floating">Amount</ion-label>
+          <br>
+          <ion-input type="number" required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Expense</ion-label>
+          <br>
+          <ion-select placeholder="Select Source" required>
+            <ion-select-option value="salary">Housing</ion-select-option>
+            <ion-select-option value="freelance">Food</ion-select-option>
+            <ion-select-option value="gift">Transport</ion-select-option>
+            <ion-select-option value="investment">Entertainment</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Date</ion-label>
+          <br>
+          <ion-input type="date" required></ion-input>
+        </ion-item>
+        <ion-button expand="block" type="submit" color="danger"
+          >Add Expense</ion-button
+        >
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
