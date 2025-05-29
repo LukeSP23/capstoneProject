@@ -17,12 +17,56 @@
     </ion-card-header>
 
     <ion-card-content>
-      This section displays your current balance and recent transactions.
+      This section displays your current balance, category totals and recent transactions.
       <br />
-      You can view, add, or edit transactions to keep track of your financial
+      You can view, edit, or delete transactions to keep track of your financial
       activities.
     </ion-card-content>
   </ion-card>
+
+  <ion-card color="tertiary">
+  <ion-card-header>
+    <ion-card-title>Financial Summary</ion-card-title>
+  </ion-card-header>
+  
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label class="ion-text-center">
+              <h3>Income</h3>
+              <h2 class="amount-positive">{{ totalIncome | currency }}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label class="ion-text-center">
+              <h3>Expenses</h3>
+              <h2 class="amount-negative">{{ totalExpenses | currency }}</h2>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        
+        <ion-col size="4">
+          <ion-item lines="none">
+            <ion-label class="ion-text-center">
+              <h3>Net Balance</h3>
+              <h2 [ngClass]="{
+                'amount-positive': netBalance >= 0,
+                'amount-negative': netBalance < 0
+              }">
+                {{ netBalance | currency }}
+              </h2>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
 
   <ion-list>
     <ion-item button detail="false" (click)="toggleIncomeCategories()">
@@ -84,12 +128,67 @@
     </div>
   </ion-list>
 
+  <ion-item button detail="false" (click)="toggleDateGroups()">
+  <ion-label>Transactions by Date</ion-label>
+  <ion-icon [name]="showDateGroups ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+</ion-item>
+
+<div *ngIf="showDateGroups">
+  <ion-list *ngFor="let dateGroup of transactionsByDate">
+    <ion-item-divider>
+      <ion-label>{{ dateGroup.date | date:'fullDate' }}</ion-label>
+      <ion-note slot="end">{{ dateGroup.total | currency }}</ion-note>
+    </ion-item-divider>
+    
+    <ion-item *ngFor="let transaction of dateGroup.transactions" detail="false">
+      <ion-label>
+        <h2>{{ transaction.Category }}</h2>
+        <p [ngClass]="{
+          'amount-positive': transaction.Type == 'Income',
+          'amount-negative': transaction.Type == 'Expense'
+        }">
+          {{ transaction.Amount | currency }}
+        </p>
+      </ion-label>
+      <p slot="end">{{ transaction.Date | date:'shortTime' }}</p>
+    </ion-item>
+  </ion-list>
+</div>
+
+<!-- Transactions by Time of Day -->
+<ion-item button detail="false" (click)="toggleTimeGroups()">
+  <ion-label>Transactions by Time</ion-label>
+  <ion-icon [name]="showTimeGroups ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon>
+</ion-item>
+
+<div *ngIf="showTimeGroups">
+  <ion-list *ngFor="let timeGroup of transactionsByTime">
+    <ion-item-divider>
+      <ion-label>{{ timeGroup.timePeriod }}</ion-label>
+      <ion-note slot="end">{{ timeGroup.total | currency }}</ion-note>
+    </ion-item-divider>
+    
+    <ion-item *ngFor="let transaction of timeGroup.transactions" detail="false">
+      <ion-label>
+        <h2>{{ transaction.Category }}</h2>
+        <p [ngClass]="{
+          'amount-positive': transaction.Type == 'Income',
+          'amount-negative': transaction.Type == 'Expense'
+        }">
+          {{ transaction.Amount | currency }}
+        </p>
+      </ion-label>
+      <p slot="end">{{ transaction.Date | date:'short' }}</p>
+    </ion-item>
+  </ion-list>
+</div>
+
   <ion-reorder-group (ionItemReorder)="handleReorder($event)" disabled="false">
     <ion-card *ngFor="let transaction of transactions" class="transaction-card">
       <ion-item lines="none">
         <ion-reorder slot="start"></ion-reorder>
         <ion-label>
-          <h2>{{ transaction.Category }}</h2>
+          <h2>{{ transaction.Category | titlecase }}</h2>
           <p
             [ngClass]="{
           'amount-positive': transaction.Type == 'Income',

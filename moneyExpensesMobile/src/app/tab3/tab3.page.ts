@@ -16,7 +16,8 @@ export class Tab3Page {
     private navCtrl: NavController,
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+     private toastController: ToastController
   ) {}
 
   incomeForm!: FormGroup;
@@ -90,41 +91,52 @@ export class Tab3Page {
   //   return this.transaction.get('name');
   // }
 
-  // async presentToast(
-  //   position: 'top' | 'middle' | 'bottom',
-  //   message: string,
-  //   duration: number,
-  //   color?:
-  //     | 'primary'
-  //     | 'secondary'
-  //     | 'tertiary'
-  //     | 'success'
-  //     | 'warning'
-  //     | 'danger'
-  // ) {
-  //   const toast = await this.toastController.create({
-  //     message, // same as message: message,
-  //     duration, // same as duration: duration,
-  //     position, // same as position: position,
-  //     color, // same as color: color,
-  //   });
+  async presentToast(
+    position: 'top' | 'middle' | 'bottom',
+    message: string,
+    duration: number,
+    color?:
+      | 'primary'
+      | 'secondary'
+      | 'tertiary'
+      | 'success'
+      | 'warning'
+      | 'danger'
+  ) {
+    const toast = await this.toastController.create({
+      message, 
+      duration, 
+      position, 
+      color,
+    });
 
-  //   await toast.present();
-  // }
+    await toast.present();
+  }
 
   closeForm() {
     this.navCtrl.navigateBack('/tabs/tab1');
   }
 
-  onSubmit(type: 'Expense' | 'Income') {
+  async onSubmit(type: 'Expense' | 'Income') {
+    
     const form = type === 'Expense' ? this.expenseForm : this.incomeForm;
-    // check if form is valid
-    if (form.invalid) {
-      console.log('Form is invalid!', form.errors);
-      return;
-    }
 
-    // Create transaction data with the type and a default trans_id
+    Object.keys(form.controls).forEach(field => {
+    const control = form.get(field);
+    control?.markAsTouched({ onlySelf: true });
+  });
+
+  if (form.invalid) {
+
+    await this.presentToast(
+      'top',
+      'Please fill out all required fields correctly (Select a valid date)',
+      3000,
+      'danger'
+    );
+    return;
+  }
+
     const transactionData = {
       trans_id: this.editingTransId ?? 0,
       Amount: form.value.Amount,
@@ -136,23 +148,47 @@ export class Tab3Page {
     if (this.editingTransId) {
       // EDIT mode
       this.transactionService.updateTransaction(transactionData).subscribe(
-        (response) => {
+       async (response) => {
           console.log('Transaction updated!', response);
+          await this.presentToast(
+          'top',
+          'Transaction updated successfully!',
+          2000,
+          'success'
+        );
           form.reset();
           this.editingTransId = null;
         },
-        (error) => {
+        async (error) => {
           console.error('Error updating transaction', error);
+          await this.presentToast(
+          'top',
+          'Failed to update transaction',
+          3000,
+          'danger'
+        );
         }
       );
     } else {
       this.transactionService.addTransaction(transactionData).subscribe(
-        (response) => {
+        async (response) => {
           console.log('Transaction added!', response);
+          await this.presentToast(
+          'top',
+          'Transaction added successfully!',
+          2000,
+          'success'
+        );
           form.reset();
         },
-        (error) => {
+        async (error) => {
           console.error('Error adding transaction', error);
+          await this.presentToast(
+          'top',
+          'Failed to add transaction',
+          3000,
+          'danger'
+        );
         }
       );
     }

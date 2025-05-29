@@ -19,6 +19,13 @@ export class Tab2Page {
   categorySums: { [key: string]: number } = {};
   showIncomeCategories = false;
   showExpenseCategories = false;
+  totalIncome = 0;
+totalExpenses = 0;
+netBalance = 0;
+showDateGroups = false;
+showTimeGroups = false;
+transactionsByDate: { date: string; transactions: Transaction[]; total: number }[] = [];
+transactionsByTime: { timePeriod: string; transactions: Transaction[]; total: number }[] = [];
 
   constructor(
     private navCtrl: NavController,
@@ -61,6 +68,8 @@ export class Tab2Page {
 
   calculateCategorySums() {
     this.categorySums = {};
+     this.totalIncome = 0;
+  this.totalExpenses = 0;
 
     this.transactions.forEach((transaction) => {
       if (!this.categorySums[transaction.Category]) {
@@ -69,10 +78,13 @@ export class Tab2Page {
 
       if (transaction.Type === 'Income') {
         this.categorySums[transaction.Category] += transaction.Amount;
+        this.totalIncome += transaction.Amount;
       } else {
         this.categorySums[transaction.Category] -= transaction.Amount;
+        this.totalExpenses += transaction.Amount;
       }
     });
+    this.netBalance = this.totalIncome - this.totalExpenses;
   }
 
   toggleIncomeCategories() {
@@ -99,11 +111,94 @@ export class Tab2Page {
     });
   }
 
+  toggleDateGroups() {
+  this.showDateGroups = !this.showDateGroups;
+}
+
+toggleTimeGroups() {
+  this.showTimeGroups = !this.showTimeGroups;
+}
+
+groupTransactionsByDate() {
+  const groupsMap = new Map<string, Transaction[]>();
+  
+  this.transactions.forEach(transaction => {
+    const dateStr = new Date(transaction.Date).toDateString();
+    if (!groupsMap.has(dateStr)) {
+      groupsMap.set(dateStr, []);
+    }
+    groupsMap.get(dateStr)?.push(transaction);
+  });
+  
+  this.transactionsByDate = Array.from(groupsMap.entries()).map(([date, transactions]) => {
+    const total = transactions.reduce((sum, t) => {
+      return t.Type === 'Income' ? sum + t.Amount : sum - t.Amount;
+    }, 0);
+    return { date, transactions, total };
+  });
+  
+  // Sort by date (newest first)
+  this.transactionsByDate.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+groupTransactionsByTime() {
+  const morning: Transaction[] = [];
+  const afternoon: Transaction[] = [];
+  const evening: Transaction[] = [];
+  const night: Transaction[] = [];
+  
+  this.transactions.forEach(transaction => {
+    const date = new Date(transaction.Date);
+    const hours = date.getHours();
+    
+    if (hours >= 5 && hours < 12) {
+      morning.push(transaction);
+    } else if (hours >= 12 && hours < 17) {
+      afternoon.push(transaction);
+    } else if (hours >= 17 && hours < 21) {
+      evening.push(transaction);
+    } else {
+      night.push(transaction);
+    }
+  });
+  
+  this.transactionsByTime = [
+    { 
+      timePeriod: 'Morning (5AM-12PM)', 
+      transactions: morning,
+      total: this.calculateTimeGroupTotal(morning)
+    },
+    { 
+      timePeriod: 'Afternoon (12PM-5PM)', 
+      transactions: afternoon,
+      total: this.calculateTimeGroupTotal(afternoon)
+    },
+    { 
+      timePeriod: 'Evening (5PM-9PM)', 
+      transactions: evening,
+      total: this.calculateTimeGroupTotal(evening)
+    },
+    { 
+      timePeriod: 'Night (9PM-5AM)', 
+      transactions: night,
+      total: this.calculateTimeGroupTotal(night)
+    }
+  ];
+}
+
+private calculateTimeGroupTotal(transactions: Transaction[]): number {
+  return transactions.reduce((sum, t) => {
+    return t.Type === 'Income' ? sum + t.Amount : sum - t.Amount;
+  }, 0);
+}
+
   loadTransactions() {
     this.transactionService.getTransactions().subscribe({
       next: (response) => {
         this.transactions = response;
         this.calculateCategorySums();
+        this.groupTransactionsByDate(); 
+      this.groupTransactionsByTime();  
         console.log('Transactions loaded', this.transactions);
       },
       error: (err) => {
