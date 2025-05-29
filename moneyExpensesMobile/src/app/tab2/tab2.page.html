@@ -87,7 +87,7 @@
           >
             <ion-card color="success">
               <ion-card-header>
-                <ion-card-title>{{ category }}</ion-card-title>
+                <ion-card-title>{{ category | titlecase }}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <h2>{{ categorySums[category] | currency }}</h2>
@@ -116,7 +116,7 @@
           >
             <ion-card color="danger">
               <ion-card-header>
-                <ion-card-title>{{ category }}</ion-card-title>
+                <ion-card-title>{{ category | titlecase }}</ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <h2>{{ categorySums[category] | currency }}</h2>
@@ -142,7 +142,7 @@
     
     <ion-item *ngFor="let transaction of dateGroup.transactions" detail="false">
       <ion-label>
-        <h2>{{ transaction.Category }}</h2>
+        <h2>{{ transaction.Category | titlecase }}</h2>
         <p [ngClass]="{
           'amount-positive': transaction.Type == 'Income',
           'amount-negative': transaction.Type == 'Expense'
@@ -170,7 +170,7 @@
     
     <ion-item *ngFor="let transaction of timeGroup.transactions" detail="false">
       <ion-label>
-        <h2>{{ transaction.Category }}</h2>
+        <h2>{{ transaction.Category | titlecase }}</h2>
         <p [ngClass]="{
           'amount-positive': transaction.Type == 'Income',
           'amount-negative': transaction.Type == 'Expense'
