@@ -47,10 +47,15 @@
         <ion-icon name="create-outline"></ion-icon>
         Edit
       </ion-button>
-      <!-- <ion-button fill="clear" color="danger" slot="end" (click)="deleteTransaction(transaction)">
-      <ion-icon name="trash-outline"></ion-icon>
-      Delete
-    </ion-button> -->
+      <ion-button
+        fill="clear"
+        color="danger"
+        slot="end"
+        (click)="presentDeleteAlert(transaction)"
+      >
+        <ion-icon name="trash-outline"></ion-icon>
+        Delete
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

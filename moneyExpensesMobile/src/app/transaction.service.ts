@@ -45,9 +45,9 @@ export class TransactionService {
   }
 
   // delete transaction by id
-  deleteTransaction(id: number): Observable<Transaction> {
+  deleteTransaction(trans_id: number): Observable<Transaction> {
     return this.httpClientInstance.delete<Transaction>(
-      this.transUrl + '/transactions/' + id
+      this.transUrl + '/transaction/delete/' + trans_id
     );
   }
 }
