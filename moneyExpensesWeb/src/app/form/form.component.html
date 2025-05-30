@@ -1,1 +1,112 @@
-<p>form works!</p>
+<div class="container mt-4">
+  <!-- Overview Card -->
+  <div class="card border-secondary mb-4 shadow">
+    <div class="card-header bg-secondary text-white">
+      Into Pocket - Out of Pocket Overview
+    </div>
+    <div class="card-body">
+      <p>
+        This section is for you, the user, to fill out your income and expenses.<br />
+        This input will be used to track your financial activities.<br />
+        You can add or edit transactions to keep up to date with your financial
+        activities.
+      </p>
+    </div>
+  </div>
+
+  <!-- Income Form -->
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">
+      Into Pocket (Money In)
+    </div>
+    <div class="card-body">
+      <form [formGroup]="incomeForm" (ngSubmit)="onSubmit('Income')">
+        <div class="mb-3">
+          <label for="incomeAmount" class="form-label">Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="incomeAmount"
+            formControlName="Amount"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="incomeCategory" class="form-label">Source</label>
+          <select
+            class="form-select"
+            id="incomeCategory"
+            formControlName="Category"
+            required
+          >
+            <option value="" disabled selected>Select Source</option>
+            <option value="salary">Salary</option>
+            <option value="freelance">Freelance</option>
+            <option value="gift">Gift</option>
+            <option value="investment">Investment</option>
+            <option value="other-Income">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="incomeDate" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="incomeDate"
+            formControlName="Date"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success w-100">Add Income</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Expense Form -->
+  <div class="card mb-4">
+    <div class="card-header bg-danger text-white">
+      Out of Pocket (Money Out)
+    </div>
+    <div class="card-body">
+      <form [formGroup]="expenseForm" (ngSubmit)="onSubmit('Expense')">
+        <div class="mb-3">
+          <label for="expenseAmount" class="form-label">Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="expenseAmount"
+            formControlName="Amount"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="expenseCategory" class="form-label">Expense</label>
+          <select
+            class="form-select"
+            id="expenseCategory"
+            formControlName="Category"
+            required
+          >
+            <option value="" disabled selected>Select Expense</option>
+            <option value="housing">Housing</option>
+            <option value="food">Food</option>
+            <option value="transport">Transport</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="other-Expense">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="expenseDate" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="expenseDate"
+            formControlName="Date"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-danger w-100">Add Expense</button>
+      </form>
+    </div>
+  </div>
+</div>

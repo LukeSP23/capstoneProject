@@ -5,7 +5,7 @@ const sequelize = require("./config");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:8100" }));
+app.use(cors({ origin: ["http://localhost:8100", "http://localhost:4200"] }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

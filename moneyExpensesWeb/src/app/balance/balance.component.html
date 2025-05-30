@@ -1,1 +1,118 @@
-<p>balance works!</p>
+<div class="container mt-4">
+  <!-- Balance Overview Card -->
+  <div class="card bg-primary text-white mb-4 shadow">
+    <div class="card-header">
+      <h4 class="mb-0">Balance Overview</h4>
+    </div>
+    <div class="card-body">
+      <p>
+        This section displays your current balance, category totals, and recent transactions.<br>
+        You can view, edit, or delete transactions to keep track of your financial activities.
+      </p>
+    </div>
+  </div>
+
+  <!-- Financial Summary -->
+  <div class="card mb-4 shadow">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">Financial Summary</h5>
+    </div>
+    <div class="card-body">
+      <div class="row text-center">
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h6>Income</h6>
+          <h3 class="text-success">{{ totalIncome | currency }}</h3>
+        </div>
+        <div class="col-md-4 mb-3 mb-md-0">
+          <h6>Expenses</h6>
+          <h3 class="text-danger">{{ totalExpenses | currency }}</h3>
+        </div>
+        <div class="col-md-4">
+          <h6>Net Balance</h6>
+          <h3 [ngClass]="{'text-success': netBalance >= 0, 'text-danger': netBalance < 0}">
+            {{ netBalance | currency }}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Sums (Collapsible) -->
+  <div class="accordion mb-4" id="categoryAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="incomeHeading">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#incomeCollapse" aria-expanded="true" aria-controls="incomeCollapse">
+          Income Categories
+        </button>
+      </h2>
+      <div id="incomeCollapse" class="accordion-collapse collapse show" aria-labelledby="incomeHeading" data-bs-parent="#categoryAccordion">
+        <div class="accordion-body">
+          <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let category of getIncomeCategoryKeys()">
+              <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                  {{ category | titlecase }}
+                </div>
+                <div class="card-body">
+                  <h5>{{ categorySums[category] | currency }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="expenseHeading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expenseCollapse" aria-expanded="false" aria-controls="expenseCollapse">
+          Expense Categories
+        </button>
+      </h2>
+      <div id="expenseCollapse" class="accordion-collapse collapse" aria-labelledby="expenseHeading" data-bs-parent="#categoryAccordion">
+        <div class="accordion-body">
+          <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let category of getExpenseCategoryKeys()">
+              <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                  {{ category | titlecase }}
+                </div>
+                <div class="card-body">
+                  <h5>{{ categorySums[category] | currency }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transactions List -->
+  <div class="card shadow">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Recent Transactions</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let transaction of transactions">
+        <div>
+          <strong>{{ transaction.Category | titlecase }}</strong>
+          <div>
+            <span [ngClass]="{'text-success': transaction.Type == 'Income', 'text-danger': transaction.Type == 'Expense'}">
+              {{ transaction.Amount | currency }}
+            </span>
+            <small class="text-muted ms-2">{{ transaction.Date | date:'short' }}</small>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-outline-primary me-2" (click)="editTransaction(transaction)">
+            Edit
+          </button>
+          <button class="btn btn-sm btn-outline-danger" (click)="presentDeleteAlert(transaction)">
+            Delete
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
