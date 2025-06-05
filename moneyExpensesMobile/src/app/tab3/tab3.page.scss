@@ -1,0 +1,90 @@
+/* Input Forms Tab */
+ion-content {
+  --background: #f8f9fa;
+}
+
+/* Instruction Card */
+ion-card[color="secondary"] {
+  ion-card-title {
+    color: var(--ion-color-secondary-contrast);
+    font-size: 1.2rem;
+  }
+  
+  ion-card-content {
+    color: var(--ion-color-secondary-contrast);
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+}
+
+/* Form Cards */
+ion-card {
+  margin: 16px;
+  border-radius: 12px;
+  
+  ion-card-header {
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+  
+  ion-card-content {
+    padding-top: 0;
+  }
+}
+
+/* Form Styles */
+form {
+  ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+    margin-bottom: 20px;
+    
+    ion-label {
+      color: var(--ion-color-medium);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    ion-input,
+    ion-select,
+    ion-datetime {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--ion-color-light-shade);
+      margin-top: 8px;
+    }
+    
+    ion-select::part(icon) {
+      color: var(--ion-color-medium);
+    }
+  }
+  
+  ion-button {
+    margin-top: 24px;
+    height: 50px;
+    font-weight: 600;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+    &[color="success"] {
+      --box-shadow: 0 4px 8px rgba(var(--ion-color-success-rgb), 0.2);
+    }
+    
+    &[color="danger"] {
+      --box-shadow: 0 4px 8px rgba(var(--ion-color-danger-rgb), 0.2);
+    }
+  }
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  ion-card {
+    margin: 16px auto;
+    max-width: 600px;
+  }
+}

@@ -7,3 +7,136 @@
 .amount-zero {
   color: black;
 }
+/* Balance and Transactions Tab */
+ion-content {
+  --background: #f5f7fa;
+}
+
+/* Summary Cards */
+ion-card[color="primary"],
+ion-card[color="tertiary"] {
+  ion-card-header {
+    ion-card-title {
+      color: var(--ion-color-primary-contrast);
+      font-size: 1.2rem;
+    }
+  }
+  
+  ion-card-content {
+    color: var(--ion-color-primary-contrast);
+    opacity: 0.9;
+  }
+}
+
+/* Financial Summary Grid */
+ion-grid {
+  ion-row {
+    ion-col {
+      ion-item {
+        --background: transparent;
+        
+        ion-label {
+          h3 {
+            font-size: 0.9rem;
+            color: black;
+          }
+          
+          h2 {
+            font-size: 1.3rem;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Category Sections */
+ion-list {
+  background: transparent;
+  
+  ion-item[button] {
+    --background: #ffffff;
+    --border-radius: 12px;
+    margin: 8px 16px;
+    width: calc(100% - 32px);
+    color: black;
+    
+    ion-label {
+      font-weight: 600;
+    }
+  }
+}
+
+/* Category Cards */
+ion-card[color="success"],
+ion-card[color="danger"] {
+  margin: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  
+  ion-card-header {
+    padding-bottom: 0;
+    
+    ion-card-title {
+      font-size: 1rem;
+    }
+  }
+  
+  ion-card-content {
+    h2 {
+      font-size: 1.2rem;
+      margin: 4px 0;
+    }
+  }
+}
+
+/* Transaction List Styles */
+.transaction-card {
+  margin: 8px 16px;
+  border-left: 4px solid transparent;
+  
+  &[data-type="Income"] {
+    border-left-color: var(--ion-color-success);
+  }
+  
+  &[data-type="Expense"] {
+    border-left-color: var(--ion-color-danger);
+  }
+  
+  ion-item {
+    --padding-start: 12px;
+    
+    ion-label {
+      h2 {
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      
+      p {
+        font-size: 0.85rem;
+      }
+    }
+    
+    ion-buttons {
+      ion-button {
+        --padding-start: 8px;
+        --padding-end: 8px;
+      }
+    }
+  }
+}
+
+/* Date Group Styles */
+ion-item-divider {
+  --background: #e9ecef;
+  --padding-start: 16px;
+  
+  ion-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  ion-note {
+    font-weight: 600;
+  }
+}

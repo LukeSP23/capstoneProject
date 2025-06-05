@@ -1,0 +1,47 @@
+/* Navbar Styles */
+.navbar {
+    padding: 0.8rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-item {
+    margin: 0 0.5rem;
+}
+
+.nav-link {
+    color: #495057 !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #0d6efd !important;
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.nav-link.router-link-active {
+    color: #ffffff !important;
+    background-color: #0d6efd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+    
+    .nav-link {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
