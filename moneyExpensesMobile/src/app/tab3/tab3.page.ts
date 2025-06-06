@@ -17,7 +17,7 @@ export class Tab3Page {
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-     private toastController: ToastController
+    private toastController: ToastController
   ) {}
 
   incomeForm!: FormGroup;
@@ -57,39 +57,7 @@ export class Tab3Page {
         this.editingTransId = null;
       }
     });
-
-    // // get id of our transaction from the URL
-    // this.route.paramMap.subscribe(
-    //   (params) => {
-    //     let id = params.get('trans_id');
-    //     if (id) {
-    // //       // get our transaction data from the server
-    //       this.transactionService.getTransaction(parseInt(id)).subscribe(
-    //         (response: Transaction) => {
-    //           console.log('Get Transaction', response);
-    // //           // update the form with the transaction data
-    //           this.transaction.patchValue({
-    //             Amount: response.Amount,
-    //             Category: response.Category,
-    //             Date: response.Date,
-    //             Type: response.Type,
-    //           });
-    //         },
-    //         (error) => {
-    //           console.error('Error getting transaction from db', error);
-    //         }
-    //       );
-    //     }
-    //   },
-    //   (error) => {
-    //     console.error('Error getting transaction id from params', error);
-    //   }
-    // );
   }
-
-  // get name() {
-  //   return this.transaction.get('name');
-  // }
 
   async presentToast(
     position: 'top' | 'middle' | 'bottom',
@@ -104,38 +72,32 @@ export class Tab3Page {
       | 'danger'
   ) {
     const toast = await this.toastController.create({
-      message, 
-      duration, 
-      position, 
+      message,
+      duration,
+      position,
       color,
     });
 
     await toast.present();
   }
 
-  closeForm() {
-    this.navCtrl.navigateBack('/tabs/tab1');
-  }
-
   async onSubmit(type: 'Expense' | 'Income') {
-    
     const form = type === 'Expense' ? this.expenseForm : this.incomeForm;
 
-    Object.keys(form.controls).forEach(field => {
-    const control = form.get(field);
-    control?.markAsTouched({ onlySelf: true });
-  });
+    Object.keys(form.controls).forEach((field) => {
+      const control = form.get(field);
+      control?.markAsTouched({ onlySelf: true });
+    });
 
-  if (form.invalid) {
-
-    await this.presentToast(
-      'top',
-      'Please fill out all required fields correctly (Select a valid date)',
-      3000,
-      'danger'
-    );
-    return;
-  }
+    if (form.invalid) {
+      await this.presentToast(
+        'top',
+        'Please fill out all required fields correctly (Select a valid date)',
+        3000,
+        'danger'
+      );
+      return;
+    }
 
     const transactionData = {
       trans_id: this.editingTransId ?? 0,
@@ -148,25 +110,25 @@ export class Tab3Page {
     if (this.editingTransId) {
       // EDIT mode
       this.transactionService.updateTransaction(transactionData).subscribe(
-       async (response) => {
-          console.log('Transaction updated!', response);
+        async (response) => {
+          this.navCtrl.navigateBack('/tabs/tab2');
           await this.presentToast(
-          'top',
-          'Transaction updated successfully!',
-          2000,
-          'success'
-        );
+            'top',
+            'Transaction updated successfully!',
+            2000,
+            'success'
+          );
           form.reset();
           this.editingTransId = null;
         },
         async (error) => {
           console.error('Error updating transaction', error);
           await this.presentToast(
-          'top',
-          'Failed to update transaction',
-          3000,
-          'danger'
-        );
+            'top',
+            'Failed to update transaction',
+            3000,
+            'danger'
+          );
         }
       );
     } else {
@@ -174,21 +136,21 @@ export class Tab3Page {
         async (response) => {
           console.log('Transaction added!', response);
           await this.presentToast(
-          'top',
-          'Transaction added successfully!',
-          2000,
-          'success'
-        );
+            'top',
+            'Transaction added successfully!',
+            2000,
+            'success'
+          );
           form.reset();
         },
         async (error) => {
           console.error('Error adding transaction', error);
           await this.presentToast(
-          'top',
-          'Failed to add transaction',
-          3000,
-          'danger'
-        );
+            'top',
+            'Failed to add transaction',
+            3000,
+            'danger'
+          );
         }
       );
     }
