@@ -208,13 +208,13 @@ private calculateTimeGroupTotal(transactions: Transaction[]): number {
   }
 
   editTransaction(transaction: Transaction) {
-    this.navCtrl.navigateForward(['/tabs/tab3'], {
+    this.navCtrl.navigateForward(['/edit-form'], {
       queryParams: {
-        trans_id: transaction.trans_id,
-        Amount: transaction.Amount,
-        Category: transaction.Category,
-        Date: transaction.Date,
-        Type: transaction.Type,
+      trans_id: transaction.trans_id,
+      Amount: transaction.Amount,
+      Category: transaction.Category,
+      Date: transaction.Date,
+      Type: transaction.Type,
       },
     });
   }

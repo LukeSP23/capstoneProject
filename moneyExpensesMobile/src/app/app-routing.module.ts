@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
+  {
+    path: 'edit-form',
+    loadChildren: () => import('./edit-form/edit-form.module').then( m => m.EditFormPageModule)
+  },
 ];
 @NgModule({
   imports: [
