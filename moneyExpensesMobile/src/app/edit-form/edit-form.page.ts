@@ -23,7 +23,7 @@ export class EditFormPage implements OnInit {
     { value: 'freelance', label: 'Freelance' },
     { value: 'gift', label: 'Gift' },
     { value: 'investment', label: 'Investment' },
-    { value: 'other', label: 'Other' },
+    { value: 'Other', label: 'Other' },
   ];
 
   expenseCategories = [

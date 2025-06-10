@@ -13,7 +13,7 @@ SELECT
     -- Random category based on transaction type
     CASE 
         WHEN transaction_type = 'Income' THEN 
-            ELT(FLOOR(1 + RAND() * 5), 'salary', 'freelance', 'gift', 'investment', 'other')
+            ELT(FLOOR(1 + RAND() * 5), 'salary', 'freelance', 'gift', 'investment', 'Other')
         ELSE 
             ELT(FLOOR(1 + RAND() * 5), 'housing', 'food', 'transport', 'entertainment', 'other')
     END AS Category,
