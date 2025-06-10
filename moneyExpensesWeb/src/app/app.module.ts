@@ -9,6 +9,7 @@ import { BalanceComponent } from './balance/balance.component';
 import { FormComponent } from './form/form.component';
 import { provideHttpClient } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
+import { EditFormComponent } from './edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomeComponent,
     BalanceComponent,
     FormComponent,
-    NavbarComponent
+    NavbarComponent,
+    EditFormComponent
   ],
   imports: [
     BrowserModule,

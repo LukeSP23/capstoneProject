@@ -1,0 +1,104 @@
+<div class="container mt-4">
+  <div
+    class="card mb-4 shadow"
+    [ngClass]="{ 'border-success': isIncome, 'border-danger': !isIncome }"
+  >
+    <div
+      class="card-header text-white"
+      [ngClass]="{ 'bg-success': isIncome, 'bg-danger': !isIncome }"
+    >
+      <h4>{{ isIncome ? "Edit Income" : "Edit Expense" }}</h4>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="amount" class="form-label">Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="amount"
+            formControlName="Amount"
+            required
+            step="0.01"
+            min="0.01"
+          />
+          <div
+            *ngIf="
+              editForm.get('Amount')?.invalid && editForm.get('Amount')?.touched
+            "
+            class="text-danger"
+          >
+            Please enter a valid amount
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="category" class="form-label">{{
+            isIncome ? "Source" : "Category"
+          }}</label>
+          <select
+            class="form-select"
+            id="category"
+            formControlName="Category"
+            required
+          >
+            <option value="" disabled selected>
+              Select {{ isIncome ? "Source" : "Category" }}
+            </option>
+            <option
+              *ngFor="let option of categoryOptions"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('Category')?.invalid &&
+              editForm.get('Category')?.touched
+            "
+            class="text-danger"
+          >
+            Please select a category
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            formControlName="Date"
+            required
+          />
+          <div
+            *ngIf="
+              editForm.get('Date')?.invalid && editForm.get('Date')?.touched
+            "
+            class="text-danger"
+          >
+            Please select a valid date
+          </div>
+        </div>
+
+        <div class="d-grid gap-2">
+          <button
+            type="submit"
+            class="btn"
+            [ngClass]="{ 'btn-success': isIncome, 'btn-danger': !isIncome }"
+          >
+            Update {{ isIncome ? "Income" : "Expense" }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> {{ isIncome ? 'Edit Income' : 'Edit Expense' }} </ion-title>
+    <ion-buttons slot="end">
+      <img
+        src="assets/icon/MonexLogo-Dark.png"
+        alt="Logo"
+        style="width: 40px; height: 40px; margin-left: 10px"
+      />
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card [color]="isIncome ? 'success' : 'danger'">
+    <ion-card-header>
+      <ion-card-title>
+        {{ isIncome ? 'Edit Income' : 'Edit Expense' }}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-label position="floating">Amount</ion-label>
+          <ion-input
+            type="number"
+            formControlName="Amount"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"
+            >{{ isIncome ? 'Source' : 'Category' }}</ion-label
+          >
+          <ion-select
+            formControlName="Category"
+            [placeholder]="isIncome ? 'Select Source' : 'Select Category'"
+            required
+          >
+            <ion-select-option
+              *ngFor="let option of categoryOptions"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Date</ion-label>
+          <ion-datetime
+            displayFormat="MMM DD, YYYY"
+            formControlName="Date"
+            required
+          ></ion-datetime>
+        </ion-item>
+
+        <ion-button
+          expand="block"
+          type="submit"
+          [color]="isIncome ? 'success' : 'danger'"
+        >
+          Update {{ isIncome ? 'Income' : 'Expense' }}
+        </ion-button>
+        <ion-button
+          expand="block"
+          type="button"
+          color="warning"
+          (click)="cancelEdit()"
+        >
+          Cancel
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

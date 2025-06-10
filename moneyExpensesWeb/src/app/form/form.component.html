@@ -6,7 +6,8 @@
     </div>
     <div class="card-body">
       <p>
-        This section is for you, the user, to fill out your income and expenses.<br />
+        This section is for you, the user, to fill out your income and
+        expenses.<br />
         This input will be used to track your financial activities.<br />
         You can add or edit transactions to keep up to date with your financial
         activities.
@@ -16,9 +17,7 @@
 
   <!-- Income Form -->
   <div class="card mb-4">
-    <div class="card-header bg-success text-white">
-      Into Pocket (Money In)
-    </div>
+    <div class="card-header bg-success text-white">Into Pocket (Money In)</div>
     <div class="card-body">
       <form [formGroup]="incomeForm" (ngSubmit)="onSubmit('Income')">
         <div class="mb-3">
@@ -44,7 +43,7 @@
             <option value="freelance">Freelance</option>
             <option value="gift">Gift</option>
             <option value="investment">Investment</option>
-            <option value="other-Income">Other</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div class="mb-3">
@@ -92,7 +91,7 @@
             <option value="food">Food</option>
             <option value="transport">Transport</option>
             <option value="entertainment">Entertainment</option>
-            <option value="other-Expense">Other</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div class="mb-3">

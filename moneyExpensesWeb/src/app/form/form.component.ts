@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-form',
   standalone: false,
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
   incomeForm!: FormGroup;
@@ -54,22 +54,22 @@ export class FormComponent implements OnInit {
     }
   }
 
-  // Helper to format date for <input type="date">
   private formatDateForInput(dateStr: string): string {
-    // Handles both ISO and short date strings
     return dateStr ? new Date(dateStr).toISOString().substring(0, 10) : '';
   }
 
   onSubmit(type: 'Expense' | 'Income') {
     const form = type === 'Expense' ? this.expenseForm : this.incomeForm;
 
-    Object.keys(form.controls).forEach(field => {
+    Object.keys(form.controls).forEach((field) => {
       const control = form.get(field);
       control?.markAsTouched({ onlySelf: true });
     });
 
     if (form.invalid) {
-      alert('Please fill out all required fields correctly (Select a valid date)');
+      alert(
+        'Please fill out all required fields correctly (Select a valid date)'
+      );
       return;
     }
 
@@ -82,18 +82,7 @@ export class FormComponent implements OnInit {
     };
 
     if (this.editingTransId) {
-      // EDIT mode
-      this.transactionService.updateTransaction(transactionData).subscribe({
-        next: () => {
-          alert('Transaction updated successfully!');
-          form.reset();
-          this.editingTransId = null;
-          this.router.navigate(['/balance']);
-        },
-        error: () => {
-          alert('Failed to update transaction');
-        }
-      });
+      console.log('Transaction Update occurred in the wrong place');
     } else {
       // ADD mode
       this.transactionService.addTransaction(transactionData).subscribe({
@@ -104,7 +93,7 @@ export class FormComponent implements OnInit {
         },
         error: () => {
           alert('Failed to add transaction');
-        }
+        },
       });
     }
   }

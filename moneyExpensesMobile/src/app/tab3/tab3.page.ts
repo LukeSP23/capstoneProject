@@ -108,29 +108,7 @@ export class Tab3Page {
     };
 
     if (this.editingTransId) {
-      // EDIT mode
-      this.transactionService.updateTransaction(transactionData).subscribe(
-        async (response) => {
-          this.navCtrl.navigateBack('/tabs/tab2');
-          await this.presentToast(
-            'top',
-            'Transaction updated successfully!',
-            2000,
-            'success'
-          );
-          form.reset();
-          this.editingTransId = null;
-        },
-        async (error) => {
-          console.error('Error updating transaction', error);
-          await this.presentToast(
-            'top',
-            'Failed to update transaction',
-            3000,
-            'danger'
-          );
-        }
-      );
+      console.log('Transaction Update occurred in the wrong place');
     } else {
       this.transactionService.addTransaction(transactionData).subscribe(
         async (response) => {

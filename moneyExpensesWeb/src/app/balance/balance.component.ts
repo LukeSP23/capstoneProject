@@ -35,8 +35,9 @@ export class BalanceComponent implements OnInit {
     total: number;
   }[] = [];
 
-  constructor(private transactionService: TransactionService,
-              private router: Router
+  constructor(
+    private transactionService: TransactionService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -116,7 +117,6 @@ export class BalanceComponent implements OnInit {
   }
 
   getIncomeCategoryKeys(): string[] {
-    // Return only categories that have at least one Income transaction
     return Object.keys(this.categorySums).filter((category) =>
       this.transactions.some(
         (t) => t.Category === category && t.Type === 'Income'
@@ -125,7 +125,6 @@ export class BalanceComponent implements OnInit {
   }
 
   getExpenseCategoryKeys(): string[] {
-    // Return only categories that have at least one Expense transaction
     return Object.keys(this.categorySums).filter((category) =>
       this.transactions.some(
         (t) => t.Category === category && t.Type === 'Expense'
@@ -134,10 +133,8 @@ export class BalanceComponent implements OnInit {
   }
 
   editTransaction(transaction: Transaction) {
-    // Navigate to the edit form page and pass the transaction id as a route parameter
-    // You need to inject Router in the constructor: private router: Router
-    this.router.navigate(['/form'], {
-      state: { transaction }
+    this.router.navigate(['/edit-form'], {
+      state: { transaction },
     });
   }
 
@@ -150,7 +147,6 @@ export class BalanceComponent implements OnInit {
   deleteTransaction(transaction: Transaction) {
     this.transactionService.deleteTransaction(transaction.trans_id).subscribe({
       next: () => {
-        // Remove from local array after successful deletion
         this.transactions = this.transactions.filter(
           (t) => t.trans_id !== transaction.trans_id
         );
