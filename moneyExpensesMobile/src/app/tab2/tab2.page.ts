@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { TransactionService } from '../transaction.service';
 import { Transaction } from '../transaction';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import type { OverlayEventDetail } from '@ionic/core';
 import { AlertController } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['tab2.page.scss'],
   standalone: false,
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
   transaction: FormGroup;
   categorySums: { [key: string]: number } = {};
   showIncomeCategories = false;
@@ -31,6 +31,7 @@ transactionsByTime: { timePeriod: string; transactions: Transaction[]; total: nu
     private navCtrl: NavController,
     private transactionService: TransactionService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private alertController: AlertController
   ) {
@@ -58,9 +59,17 @@ transactionsByTime: { timePeriod: string; transactions: Transaction[]; total: nu
     this.loadTransactions();
   }
 
-  ionViewDidEnter() {
-    this.loadTransactions();
-  }
+  ionViewWillEnter() {
+  this.route.queryParams.subscribe(params => {
+    if (params['refresh']) {
+      this.loadTransactions();
+      this.router.navigate([], {
+        queryParams: { refresh: null },
+        queryParamsHandling: 'merge'
+      });
+    }
+  });
+}
 
   getCategoryKeys(): string[] {
     return Object.keys(this.categorySums);

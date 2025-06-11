@@ -103,7 +103,9 @@ export class EditFormPage implements OnInit {
             color: 'success',
           });
           await toast.present();
-          this.router.navigate(['/tabs/tab2']);
+          this.router.navigate(['/tabs/tab2'], {
+            queryParams: { refresh: true },
+          });
         },
         async (error) => {
           console.error('Error updating transaction', error);
