@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../services/transaction.service';
 import { ToastController } from '@ionic/angular';
 import { Transaction } from '../transaction';
 

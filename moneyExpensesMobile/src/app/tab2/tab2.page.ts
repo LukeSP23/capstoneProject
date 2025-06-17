@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../services/transaction.service';
 import { Transaction } from '../transaction';
 import { ActivatedRoute, Router } from '@angular/router';
 import type { OverlayEventDetail } from '@ionic/core';

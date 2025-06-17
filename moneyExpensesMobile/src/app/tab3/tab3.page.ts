@@ -3,7 +3,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Transaction } from '../transaction';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { TransactionService } from '../transaction.service';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   selector: 'app-tab3',
