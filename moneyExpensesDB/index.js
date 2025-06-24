@@ -3,16 +3,22 @@ const cors = require("cors");
 
 const sequelize = require("./config");
 
+const transaction_router = require("./routes/transaction");
+const authRoutes = require("./routes/auth");
+const verifyToken = require("./middlewares/auth");
+
 const app = express();
 
-app.use(cors({ origin: ["http://localhost:8100", "http://localhost:4200"] }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: ["http://localhost:8100", "http://localhost:4200"] }));
 
-const Transaction = require("./models/transaction");
+app.use(authRoutes);
 
-const transaction_router = require("./routes/transaction");
+app.use(verifyToken);
+
 app.use('/transaction', transaction_router);
+
 
 
 sequelize

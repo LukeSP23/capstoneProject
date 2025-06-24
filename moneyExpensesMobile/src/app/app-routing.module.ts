@@ -11,6 +11,15 @@ const routes: Routes = [
     path: 'edit-form',
     loadChildren: () => import('./edit-form/edit-form.module').then( m => m.EditFormPageModule)
   },
+  {
+    path: 'login-form',
+    loadChildren: () => import('./login-form/login-form.module').then( m => m.LoginFormPageModule)
+  },
+  {
+    path: 'signup-form',
+    loadChildren: () => import('./signup-form/signup-form.module').then( m => m.SignupFormPageModule)
+  },
+  
 ];
 @NgModule({
   imports: [

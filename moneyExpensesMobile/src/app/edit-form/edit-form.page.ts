@@ -72,7 +72,7 @@ export class EditFormPage implements OnInit {
   }
 
   cancelEdit() {
-    this.router.navigate(['/tabs/tab2']);
+    this.router.navigate(['/tabs/Balance']);
   }
 
   async onSubmit() {
@@ -103,7 +103,7 @@ export class EditFormPage implements OnInit {
             color: 'success',
           });
           await toast.present();
-          this.router.navigate(['/tabs/tab2'], {
+          this.router.navigate(['/tabs/Balance'], {
             queryParams: { refresh: true },
           });
         },
@@ -129,7 +129,7 @@ export class EditFormPage implements OnInit {
             color: 'success',
           });
           await toast.present();
-          this.router.navigate(['/tabs/tab2']);
+          this.router.navigate(['/tabs/Balance']);
         },
         async (error) => {
           console.error('Error adding transaction', error);
